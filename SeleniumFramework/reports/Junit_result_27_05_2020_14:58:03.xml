@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite errors="0" failures="1" hostname="BA92-C02T6E6SGTFL" name="pytest" skipped="0" tests="3" time="30.181" timestamp="2020-05-27T14:58:03.886546"><testcase classname="test_HomePage.TestHomePage" file="test_HomePage.py" line="11" name="test_formSubmission[getData0]" time="7.879"></testcase><testcase classname="test_HomePage.TestHomePage" file="test_HomePage.py" line="11" name="test_formSubmission[getData1]" time="4.099"></testcase><testcase classname="test_end2end.TestOne" file="test_end2end.py" line="13" name="test_e2e" time="17.477"><failure message="assert &apos;Succsess! Thank you&apos; in &apos;×\nSuccess! Thank you! Your order will be delivered in next few weeks :-).&apos;
+ +  where &apos;×\nSuccess! Thank you! Your order will be delivered in next few weeks :-).&apos; = &lt;selenium.webdriver.remote.webelement.WebElement (session=&quot;656a35517d489aabbc16392bb11883c9&quot;, element=&quot;6d9ffaf9-a078-48fe-b7fc-1a8fde93943f&quot;)&gt;.text
+ +    where &lt;selenium.webdriver.remote.webelement.WebElement (session=&quot;656a35517d489aabbc16392bb11883c9&quot;, element=&quot;6d9ffaf9-a078-48fe-b7fc-1a8fde93943f&quot;)&gt; = &lt;bound method Confirmation.getSuccessMessage of &lt;pageObjects.confirmationPage.Confirmation object at 0x10efc72b0&gt;&gt;()
+ +      where &lt;bound method Confirmation.getSuccessMessage of &lt;pageObjects.confirmationPage.Confirmation object at 0x10efc72b0&gt;&gt; = &lt;pageObjects.confirmationPage.Confirmation object at 0x10efc72b0&gt;.getSuccessMessage">self = &lt;tests.test_end2end.TestOne object at 0x10efb33a0&gt;
+
+    def test_e2e(self):
+        log = self.getLogger()
+        homepage = HomePage(self.driver)
+        objects = homepage.shopItems()
+        cards = objects.getCardTitles()
+        log.info(&quot;Getting all card titles.&quot;)
+        i = -1
+        for card in cards:
+            i = i + 1
+            cardText = card.text
+            log.info(cardText)
+            if cardText == &quot;Blackberry&quot;:
+                objects.getCardFooter()[i].click()
+    
+        time.sleep(2)
+    
+        checkout_items = objects.gotoCheckout()  # confirm items and transit checkout page
+    
+        phones = checkout_items.Items()
+    
+        for phone in phones:
+            if phone.text == &quot;Blackberry&quot;:
+                print(&quot;Asserted&quot;)
+                break
+    
+        price_info = checkout_items.getPrices()
+        for element in price_info:
+            log.info(element.text[3:])
+    
+        confirm = checkout_items.confirmCheckout()  # confirm checkout and transit to next page
+    
+        assert &quot;location&quot; in confirm.getLabels().text
+        log.info(&quot;Entering country name as &apos;In&apos; for searching India&quot;)
+        confirm.getDropdown().send_keys(&quot;In&quot;)
+        self.verifyLinkPresence(&quot;India&quot;)
+        log.info(&quot;Selecting country as India&quot;)
+    
+        # confirm.waitCountry().click()
+        self.driver.find_element_by_link_text(&quot;India&quot;).click()
+        time.sleep(2)
+        self.driver.execute_script(&quot;arguments[0].click();&quot;, confirm.getCheckbox())
+        time.sleep(2)
+        assert confirm.getCheckbox().is_enabled()
+    
+        self.driver.execute_script(&quot;arguments[0].click();&quot;, confirm.getSubmitButton())
+        time.sleep(1)
+        log.info(&quot;Text received is: &quot;+confirm.getSuccessMessage().text)
+    
+&gt;       assert &quot;Succsess! Thank you&quot; in confirm.getSuccessMessage().text
+E       assert &apos;Succsess! Thank you&apos; in &apos;×\nSuccess! Thank you! Your order will be delivered in next few weeks :-).&apos;
+E        +  where &apos;×\nSuccess! Thank you! Your order will be delivered in next few weeks :-).&apos; = &lt;selenium.webdriver.remote.webelement.WebElement (session=&quot;656a35517d489aabbc16392bb11883c9&quot;, element=&quot;6d9ffaf9-a078-48fe-b7fc-1a8fde93943f&quot;)&gt;.text
+E        +    where &lt;selenium.webdriver.remote.webelement.WebElement (session=&quot;656a35517d489aabbc16392bb11883c9&quot;, element=&quot;6d9ffaf9-a078-48fe-b7fc-1a8fde93943f&quot;)&gt; = &lt;bound method Confirmation.getSuccessMessage of &lt;pageObjects.confirmationPage.Confirmation object at 0x10efc72b0&gt;&gt;()
+E        +      where &lt;bound method Confirmation.getSuccessMessage of &lt;pageObjects.confirmationPage.Confirmation object at 0x10efc72b0&gt;&gt; = &lt;pageObjects.confirmationPage.Confirmation object at 0x10efc72b0&gt;.getSuccessMessage
+
+test_end2end.py:62: AssertionError</failure></testcase></testsuite></testsuites>

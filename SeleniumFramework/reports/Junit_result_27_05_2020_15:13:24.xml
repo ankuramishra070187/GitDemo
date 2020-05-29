@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite errors="0" failures="2" hostname="BA92-C02T6E6SGTFL" name="pytest" skipped="0" tests="3" time="26.446" timestamp="2020-05-27T15:13:24.713413"><testcase classname="test_HomePage.TestHomePage" file="test_HomePage.py" line="11" name="test_formSubmission[getData0]" time="5.487"><failure message="KeyError: &apos;birthsdate&apos;">self = &lt;tests.test_HomePage.TestHomePage object at 0x107bce040&gt;
+getData = {&apos;birthdate&apos;: &apos;07-01-1965&apos;, &apos;email&apos;: &apos;mishra@ankur.com&apos;, &apos;firstname&apos;: &apos;Ankur&apos;, &apos;gender&apos;: &apos;Male&apos;, ...}
+
+    def test_formSubmission(self, getData):
+        log = self.getLogger()
+        # driver = webdriver.Chrome(executable_path=&quot;/Users/ami23772/Downloads/Study/Selenium_with_Python/chromedriver&quot;)
+        # driver.get(&quot;https://rahulshettyacademy.com/angularpractice/&quot;)
+        homepage = HomePage(self.driver)
+        homepage.getName().send_keys(getData[&quot;firstname&quot;])
+        homepage.getEmail().send_keys(getData[&quot;email&quot;])
+        homepage.getPassword().send_keys(getData[&quot;password&quot;])
+        homepage.getCheckout().click()
+        # dropdown = Select(self.driver.find_element_by_id(&quot;exampleFormControlSelect1&quot;))
+        &quot;&quot;&quot;
+        This is very exhaustive way and not to say hardcoded
+    
+            homepage.getGender().select_by_visible_text(&quot;Female&quot;)
+            time.sleep(1)
+            homepage.getGender().select_by_visible_text(&quot;Male&quot;)
+    
+        We can make it more flexible and reusable by making it generic in BaseClass
+        then call the method and pass text
+        &quot;&quot;&quot;
+        self.selectOptionByText(homepage.getGender(), getData[&quot;gender&quot;])
+        radio = self.driver.find_elements_by_name(&quot;inlineRadioOptions&quot;)
+        radio[1].click()
+        # self.selectRadioOption(homepage.getEmploymentStatus(), &quot;Employed&quot;)
+        time.sleep(1)
+&gt;       homepage.getDOB().send_keys(getData[&quot;birthsdate&quot;])
+E       KeyError: &apos;birthsdate&apos;
+
+test_HomePage.py:37: KeyError</failure></testcase><testcase classname="test_HomePage.TestHomePage" file="test_HomePage.py" line="11" name="test_formSubmission[getData1]" time="1.597"><failure message="KeyError: &apos;birthsdate&apos;">self = &lt;tests.test_HomePage.TestHomePage object at 0x107c0d310&gt;
+getData = {&apos;birthdate&apos;: &apos;01-07-1970&apos;, &apos;email&apos;: &apos;Lalu@gb.com&apos;, &apos;firstname&apos;: &apos;Gabriel&apos;, &apos;gender&apos;: &apos;Female&apos;, ...}
+
+    def test_formSubmission(self, getData):
+        log = self.getLogger()
+        # driver = webdriver.Chrome(executable_path=&quot;/Users/ami23772/Downloads/Study/Selenium_with_Python/chromedriver&quot;)
+        # driver.get(&quot;https://rahulshettyacademy.com/angularpractice/&quot;)
+        homepage = HomePage(self.driver)
+        homepage.getName().send_keys(getData[&quot;firstname&quot;])
+        homepage.getEmail().send_keys(getData[&quot;email&quot;])
+        homepage.getPassword().send_keys(getData[&quot;password&quot;])
+        homepage.getCheckout().click()
+        # dropdown = Select(self.driver.find_element_by_id(&quot;exampleFormControlSelect1&quot;))
+        &quot;&quot;&quot;
+        This is very exhaustive way and not to say hardcoded
+    
+            homepage.getGender().select_by_visible_text(&quot;Female&quot;)
+            time.sleep(1)
+            homepage.getGender().select_by_visible_text(&quot;Male&quot;)
+    
+        We can make it more flexible and reusable by making it generic in BaseClass
+        then call the method and pass text
+        &quot;&quot;&quot;
+        self.selectOptionByText(homepage.getGender(), getData[&quot;gender&quot;])
+        radio = self.driver.find_elements_by_name(&quot;inlineRadioOptions&quot;)
+        radio[1].click()
+        # self.selectRadioOption(homepage.getEmploymentStatus(), &quot;Employed&quot;)
+        time.sleep(1)
+&gt;       homepage.getDOB().send_keys(getData[&quot;birthsdate&quot;])
+E       KeyError: &apos;birthsdate&apos;
+
+test_HomePage.py:37: KeyError</failure></testcase><testcase classname="test_end2end.TestOne" file="test_end2end.py" line="13" name="test_e2e" time="17.439"></testcase></testsuite></testsuites>
