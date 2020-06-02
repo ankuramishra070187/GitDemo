@@ -4,6 +4,7 @@
 
 def GreetMe(name):
     print("Good Morning"+name)
+    print("Hello There!")
     # Function Call
 
 
@@ -14,12 +15,3 @@ def AddIntegers(a, b):
 GreetMe("Rahul Shetty")
 
 print(AddIntegers(2, 3))
-
-
-
-
-
-
-
-
-
